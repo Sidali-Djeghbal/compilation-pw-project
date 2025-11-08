@@ -1,0 +1,5 @@
+programme calc;
+variable x: entier;
+debut
+    x := 10;
+fin.
