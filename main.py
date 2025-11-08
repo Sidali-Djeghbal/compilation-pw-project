@@ -1,4 +1,3 @@
-from curses.ascii import isalpha, isspace
 from enum import Enum
 from dataclasses import dataclass
 
@@ -24,7 +23,7 @@ class TOKENS(Enum):
     NUMBER = 5
 
 
-KEYWORDS = ("programmme", "variable", "debut", "fin", "entier", "reel")
+KEYWORDS = ("programme", "variable", "debut", "fin", "entier", "reel")
 SYMBOLS = (":", "=", ".", ";", ",")
 OPERATORS = (":=", "+", "-", "*", "/")
 
@@ -76,7 +75,7 @@ def scan(code: str) -> list[Token]:
                     token = Token(TOKENS.OPERATOR, ":=")
                     tokens.append(token)
                 else:
-                    i -= 1
+                    i -= 1  # retracting
                     token = Token(TOKENS.SYMBOL, ":")
                     tokens.append(token)
 
