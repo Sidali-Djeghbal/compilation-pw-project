@@ -87,10 +87,7 @@ The grammar of the MiniPascal-FR language is defined in Backus-Naur Form (BNF):
 ---
 
 ## How to Run
-1. Implement the `Scanner2025` and `Parser2025` components.
-2. Ensure the scanner outputs the token sequence to the `TOKEN` file and displays relevant information on the screen.
-3. Ensure the parser outputs the rule sequence to the `RULE` file and displays relevant information on the screen.
-4. Validate the implementation with the responsible teacher before the deadlines.
+- run `main.py` (no 3rd party libraries needed)
 
 ---
 
