@@ -41,7 +41,7 @@ def scan(code: str) -> list[Token]:
             i += 1
             c = code[i]
 
-            while c.isdigit() and not c.isspace():
+            while c.isdigit(): #and not c.isspace():
                 buf += c
                 i += 1
                 c = code[i]
@@ -56,7 +56,7 @@ def scan(code: str) -> list[Token]:
             i += 1
             c = code[i]
 
-            while c.isalnum() and not c.isspace():
+            while c.isalnum(): #and not c.isspace():
                 buf += c
                 i += 1
                 c = code[i]

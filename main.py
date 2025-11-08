@@ -7,8 +7,11 @@ def main():
         code = f.read()
 
     tokens = scan(code)
+    print("---- Tokens: ----")
     for token in tokens:
         print(token)
+    print("-----------------")
+    print("Lecical analyis completed successfully.")
 
 
 if __name__ == "__main__":
