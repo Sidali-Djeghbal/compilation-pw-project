@@ -11,7 +11,7 @@ def main():
     for token in tokens:
         print(token)
     print("-----------------")
-    print("Lecical analyis completed successfully.")
+    print("Lexical analysis complete.")
 
 
 if __name__ == "__main__":
