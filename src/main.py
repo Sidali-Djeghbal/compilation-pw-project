@@ -1,7 +1,7 @@
 from os import path
 from sys import argv
-from src.log import print_token_squence
-from src.scanner import scan
+from log import print_token_squence
+from scanner import TOKENS, scan
 
 
 def read_file(file_path: str) -> str:
@@ -20,8 +20,8 @@ def main():
 
     file_path = argv[1]
 
-    code = read_file(file_path)
-    tokens = scan(code)
+    code: str = read_file(file_path)
+    tokens: list[TOKENS] = scan(code)
 
     print_token_squence(tokens)
 

@@ -74,6 +74,7 @@ The grammar of the MiniPascal-FR language is defined in Backus-Naur Form (BNF):
 ---
 
 ## How to Run
+- `cd src`.
 - run `main.py` (no 3rd party libraries needed).
 
 ---
