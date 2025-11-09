@@ -39,22 +39,7 @@ def scan(code: str) -> list[Token]:
             None  # None represents whitespace, and will not be added to tokens list.
         )
 
-        if c.isdigit():
-            i += 1
-            c = code[i]
-
-            while c.isdigit():
-                buf += c
-                i += 1
-                c = code[i]
-
-            if c.isalpha():
-                raise ScannerError(f"Unexpected alphabet at char {i}")
-
-            i -= 1  # retracting
-            token_type = TOKENS.NUMBER
-
-        elif c.isalpha():
+        if c.isalpha():
             i += 1
             c = code[i]
 
@@ -68,6 +53,21 @@ def scan(code: str) -> list[Token]:
 
         elif c.isspace():
             pass
+
+        elif c.isdigit():
+            i += 1
+            c = code[i]
+
+            while c.isdigit():
+                buf += c
+                i += 1
+                c = code[i]
+
+            if c.isalpha():
+                raise ScannerError(f"Unexpected alphabet at char {i}")
+
+            i -= 1  # retracting
+            token_type = TOKENS.NUMBER
 
         else:
             if c == ":":

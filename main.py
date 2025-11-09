@@ -7,6 +7,7 @@ def main():
         code = f.read()
 
     tokens = scan(code)
+
     print("---- Tokens: ----")
     for token in tokens:
         print(token)
