@@ -1,3 +1,4 @@
+from log import print_token_squence
 from scanner import scan
 
 
@@ -8,11 +9,7 @@ def main():
 
     tokens = scan(code)
 
-    print("---- Tokens: ----")
-    for token in tokens:
-        print(token)
-    print("-----------------")
-    print("Lexical analysis complete.")
+    print_token_squence(tokens)
 
 
 if __name__ == "__main__":
