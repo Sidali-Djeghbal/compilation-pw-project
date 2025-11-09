@@ -9,21 +9,6 @@ The project is part of the **3rd Year Computer Science Engineer AI** curriculum 
 
 ---
 
-## Objectives
-The primary objectives of this project are:
-
-1. **Scanner Implementation:**
-   - Design and implement a scanner for the MiniPascal-FR language.
-   - Store the output in a file named `TOKEN`.
-   - Display the sequence of tokens, the symbol table, and any errors with their types on the screen.
-
-2. **Parser Implementation:**
-   - Design and implement a recursive descent parser for the MiniPascal-FR language.
-   - Store the output in a file named `RULE`.
-   - Display the sequence of rules corresponding to the source program and any errors with their types on the screen.
-
----
-
 ## Grammar of MiniPascal-FR
 The grammar of the MiniPascal-FR language is defined in Backus-Naur Form (BNF):
 
@@ -87,9 +72,17 @@ The grammar of the MiniPascal-FR language is defined in Backus-Naur Form (BNF):
 ---
 
 ## How to Run
-- run `main.py` (no 3rd party libraries needed)
+- run `main.py` (no 3rd party libraries needed).
 
 ---
 
-## Contact
-For any questions or clarifications, please contact the responsible teacher of the practical work.
+## TO-DO 
+1. **Scanner Implementation:**
+   - [ ] Design and implement a scanner for the MiniPascal-FR language.
+   - [ ] Store the output in a file named `TOKEN`.
+   - [ ] Display the sequence of tokens, the symbol table, and any errors with their types on the screen.
+
+3. **Parser Implementation:**
+   - [ ] Design and implement a recursive descent parser for the MiniPascal-FR language.
+   - [ ] Store the output in a file named `RULE`.
+   - [ ] Display the sequence of rules corresponding to the source program and any errors with their types on the scree
