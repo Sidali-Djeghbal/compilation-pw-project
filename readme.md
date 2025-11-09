@@ -85,4 +85,4 @@ The grammar of the MiniPascal-FR language is defined in Backus-Naur Form (BNF):
 3. **Parser Implementation:**
    - [ ] Design and implement a recursive descent parser for the MiniPascal-FR language.
    - [ ] Store the output in a file named `RULE`.
-   - [ ] Display the sequence of rules corresponding to the source program and any errors with their types on the scree
+   - [ ] Display the sequence of rules corresponding to the source program and any errors with their types on the screen.
