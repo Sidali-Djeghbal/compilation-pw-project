@@ -5,8 +5,6 @@ This project involves the design and implementation of a compiler for the MiniPa
 1. **Scanner (Scanner2025):** Responsible for lexical analysis.
 2. **Parser (Parser2025):** Responsible for syntactic analysis.
 
-The project is part of the **3rd Year Computer Science Engineer AI** curriculum at the University of Guelma, under the **Compilation** module for the academic year 2025/2026.
-
 ---
 
 ## Grammar of MiniPascal-FR
