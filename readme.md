@@ -1,26 +1,13 @@
-# MiniPascal-FR Compiler Project
+## MiniPascal-FR Compiler Project
+
+# ⚠️ Note for Classmates
+Using this repository to copy or cheat **will not help you improve your skills.** Building your own MiniPascal-FR compiler is the only way to truly learn and understand the concepts. If you need guidance or explanations, I’m here to help—ask questions, discuss ideas, and work through problems yourself. **The goal is learning, not copy-paste.**
+
 
 ## Overview
 This project involves the design and implementation of a compiler for the MiniPascal-FR programming language. The compiler will consist of two main components:
 1. **Scanner (Scanner2025):** Responsible for lexical analysis.
 2. **Parser (Parser2025):** Responsible for syntactic analysis.
-
-The project is part of the **3rd Year Computer Science Engineer AI** curriculum at the University of Guelma, under the **Compilation** module for the academic year 2025/2026.
-
----
-
-## Objectives
-The primary objectives of this project are:
-
-1. **Scanner Implementation:**
-   - Design and implement a scanner for the MiniPascal-FR language.
-   - Store the output in a file named `TOKEN`.
-   - Display the sequence of tokens, the symbol table, and any errors with their types on the screen.
-
-2. **Parser Implementation:**
-   - Design and implement a recursive descent parser for the MiniPascal-FR language.
-   - Store the output in a file named `RULE`.
-   - Display the sequence of rules corresponding to the source program and any errors with their types on the screen.
 
 ---
 
@@ -87,9 +74,17 @@ The grammar of the MiniPascal-FR language is defined in Backus-Naur Form (BNF):
 ---
 
 ## How to Run
-- run `main.py` (no 3rd party libraries needed)
+- run `main.py` (no 3rd party libraries needed).
 
 ---
 
-## Contact
-For any questions or clarifications, please contact the responsible teacher of the practical work.
+## TO-DO 
+1. **Scanner Implementation:**
+   - [ ] Design and implement a scanner for the MiniPascal-FR language.
+   - [ ] Store the output in a file named `TOKEN`.
+   - [ ] Display the sequence of tokens, the symbol table, and any errors with their types on the screen.
+
+3. **Parser Implementation:**
+   - [ ] Design and implement a recursive descent parser for the MiniPascal-FR language.
+   - [ ] Store the output in a file named `RULE`.
+   - [ ] Display the sequence of rules corresponding to the source program and any errors with their types on the screen.
