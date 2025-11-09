@@ -1,7 +1,7 @@
 from os import path
 from sys import argv
-from log import print_token_squence
-from scanner import scan
+from src.log import print_token_squence
+from src.scanner import scan
 
 
 def read_file(file_path: str) -> str:
