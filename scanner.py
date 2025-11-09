@@ -1,9 +1,6 @@
 from enum import Enum
 from dataclasses import dataclass
-
-
-class ScannerError(Exception):
-    pass
+from errors import LexicalError
 
 
 class TOKENS(Enum):
@@ -64,7 +61,7 @@ def scan(code: str) -> list[Token]:
                 c = code[i]
 
             if c.isalpha():
-                raise ScannerError(f"Unexpected alphabet at char {i}")
+                raise LexicalError(f"Unexpected alphabet at char {i}")
 
             i -= 1  # retracting
             token_type = TOKENS.NUMBER
@@ -85,7 +82,7 @@ def scan(code: str) -> list[Token]:
                 token_type = TOKENS.SYMBOL if c in SYMBOLS else TOKENS.OPERATOR
 
             else:
-                raise ScannerError(f"Invalid character at char {i}")
+                raise LexicalError(f"Invalid character at char {i}")
 
         if token_type:
             token = Token(token_type, buf)
