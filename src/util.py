@@ -12,14 +12,6 @@ def read_file(file_path: str) -> str:
 
 def write_scanner_result(result: ScannerResult):
     with open("TOKEN", "w") as f:
-        print("---  Symbols: ---")
-        for i, symbol in enumerate(result.symbols_table):
-            print(i, symbol)
-            f.write(f"{i} {symbol}\n")
-        print("-----------------")
-
-        f.write("list:\n")
-
         print("---- Tokens: ----")
         for token in result.tokens:
             if token.code in (TOKENS.ID, TOKENS.NUMBER):
@@ -28,7 +20,16 @@ def write_scanner_result(result: ScannerResult):
             else:
                 print(f"<{token.code.name}, {token.val}>")
                 f.write(f"({token.code.value},'{token.val}'),")
+        print("-----------------")
 
+        # print seperators
+        f.write("list:\n")
+        print()
+
+        print("---  Symbols: ---")
+        for i, symbol in enumerate(result.symbols_table):
+            print(i, "|", symbol)
+            f.write(f"{i} {symbol}\n")
         print("-----------------")
 
     print("Lexical analysis complete with no errors.")
