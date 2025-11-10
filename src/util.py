@@ -10,9 +10,14 @@ def read_file(file_path: str) -> str:
         return f.read()
 
 
-def print_token_squence(tokens: list[TOKENS]):
+def write_token_sequence(tokens: list[TOKENS]):
     print("---- Tokens: ----")
-    for token in tokens:
-        print(token)
+
+    with open("TOKEN", "w") as f:
+        for token in tokens:
+            print(token)
+            f.write(str(token))
+            f.write("\n")
+
     print("-----------------")
     print("Lexical analysis complete.")
