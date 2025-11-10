@@ -1,5 +1,5 @@
 from os import path
-from scanner import TOKENS
+from scanner import TOKENS, ScannerResult
 
 
 def read_file(file_path: str) -> str:
@@ -10,14 +10,25 @@ def read_file(file_path: str) -> str:
         return f.read()
 
 
-def write_token_sequence(tokens: list[TOKENS]):
-    print("---- Tokens: ----")
-
+def write_scanner_result(result: ScannerResult):
     with open("TOKEN", "w") as f:
-        for token in tokens:
-            print(token)
-            f.write(str(token))
-            f.write("\n")
+        print("---  Symbols: ---")
+        for i, symbol in enumerate(result.symbols_table):
+            print(i, symbol)
+            f.write(f"{i} {symbol}\n")
+        print("-----------------")
 
-    print("-----------------")
-    print("Lexical analysis complete.")
+        f.write("list:\n")
+
+        print("---- Tokens: ----")
+        for token in result.tokens:
+            if token.code in (TOKENS.ID, TOKENS.NUMBER):
+                print(f"<{token.code.name}, {result.symbols_table[token.val]}>")
+                f.write(f"({token.code.value},{token.val}),")
+            else:
+                print(f"<{token.code.name}, {token.val}>")
+                f.write(f"({token.code.value},'{token.val}'),")
+
+        print("-----------------")
+
+    print("Lexical analysis complete. Errors: 0.")

@@ -1,6 +1,6 @@
 from sys import argv
-from util import write_token_sequence, read_file
-from scanner import TOKENS, scan
+from util import write_scanner_result, read_file
+from scanner import scan
 
 
 def main():
@@ -12,9 +12,9 @@ def main():
     file_path = argv[1]
 
     code: str = read_file(file_path)
-    tokens: list[TOKENS] = scan(code)
+    scanner_result = scan(code)
 
-    write_token_sequence(tokens)
+    write_scanner_result(scanner_result)
 
 
 if __name__ == "__main__":

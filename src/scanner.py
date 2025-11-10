@@ -14,10 +14,16 @@ class TOKENS(Enum):
 @dataclass
 class Token:
     code: TOKENS
-    val: str
+    val: str | int
 
     def __repr__(self):
         return f"<{self.code.name}, {self.val}>"
+
+
+@dataclass
+class ScannerResult:
+    tokens: list[Token]
+    symbols_table: list
 
 
 KEYWORDS = (
@@ -59,8 +65,9 @@ OPERATORS = (
 )
 
 
-def scan(code: str) -> list[Token]:
+def scan(code: str) -> ScannerResult:
     tokens: list[Token] = []
+    symbols_table: list = []
 
     i = 0
     while i < len(code):
@@ -69,6 +76,10 @@ def scan(code: str) -> list[Token]:
         token_type: TOKENS = (
             None  # None represents whitespace, and will not be added to tokens list.
         )
+
+        # None represents (keyword or op or sym)
+        # if not None then it will be the address of the id or literal in the symbols_table.
+        token_val: int | None = None
 
         if c.isalpha():
             if i + 1 < len(code):
@@ -96,11 +107,15 @@ def scan(code: str) -> list[Token]:
                 else:
                     i -= 1  # retracting
 
-            token_type = (
-                TOKENS.KEYWORD
-                if buf in KEYWORDS
-                else (TOKENS.OPERATORS if buf in OPERATORS else TOKENS.ID)
-            )
+            if buf in KEYWORDS:
+                token_type = TOKENS.KEYWORD
+            elif buf in OPERATORS:
+                token_type = TOKENS.OPERATOR
+            else:
+                if buf not in symbols_table:
+                    symbols_table.append(buf)
+                token_val = symbols_table.index(buf)
+                token_type = TOKENS.ID
 
         elif c.isspace():
             pass
@@ -122,6 +137,9 @@ def scan(code: str) -> list[Token]:
 
                 i -= 1  # retracting
 
+            if buf not in symbols_table:
+                symbols_table.append(buf)
+            token_val = symbols_table.index(buf)
             token_type = TOKENS.NUMBER
 
         else:
@@ -170,10 +188,11 @@ def scan(code: str) -> list[Token]:
             else:
                 raise LexicalError(f"Illegal character at char {i}")
 
+        # not white space
         if token_type:
-            token = Token(token_type, buf)
+            token = Token(token_type, token_val if (token_val is not None) else buf)
             tokens.append(token)
 
         i += 1
 
-    return tokens
+    return ScannerResult(tokens, symbols_table)
