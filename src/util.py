@@ -31,4 +31,4 @@ def write_scanner_result(result: ScannerResult):
 
         print("-----------------")
 
-    print("Lexical analysis complete. Errors: 0.")
+    print("Lexical analysis complete with no errors.")
