@@ -20,7 +20,26 @@ class Token:
         return f"<{self.code.name}, {self.val}>"
 
 
-KEYWORDS = ("programme", "variable", "debut", "fin", "entier", "reel")
+KEYWORDS = (
+    "programme",
+    "variable",
+    "debut",
+    "fin",
+    "entier",
+    "reel",
+    "constante",
+    "si",
+    "alors",
+    "sinon",
+    "tantque",
+    "faire",
+    "repeter",
+    "jusqu'a",
+    "pour",
+    "allant de",
+    "a",
+    "pas",
+)
 SYMBOLS = (":", "=", ".", ";", ",")
 OPERATORS = (":=", "+", "-", "*", "/")
 
@@ -37,46 +56,67 @@ def scan(code: str) -> list[Token]:
         )
 
         if c.isalpha():
-            i += 1
-            c = code[i]
-
-            while c.isalnum():
-                buf += c
+            if i + 1 < len(code):
                 i += 1
                 c = code[i]
+                while c.isalnum():
+                    buf += c
+                    i += 1
+                    if i < len(code):
+                        c = code[i]
+                    else:
+                        break
 
-            i -= 1  # retracting
+                # check for jusqu'a
+                if i + 1 < len(code) and code[i : i + 2] == "'a":
+                    buf += "'a"
+                    i += 1
+
+                # check for 'allant de'
+                elif i + 2 < len(code) and code[i : i + 3] == " de":
+                    buf += " de"
+                    i += 2
+
+                # normal keyword or identifier
+                else:
+                    i -= 1  # retracting
+
             token_type = TOKENS.KEYWORD if buf in KEYWORDS else TOKENS.ID
 
         elif c.isspace():
             pass
 
         elif c.isdigit():
-            i += 1
-            c = code[i]
-
-            while c.isdigit():
-                buf += c
+            if i < len(code):
                 i += 1
                 c = code[i]
+                while c.isdigit():
+                    buf += c
+                    i += 1
+                    if i < len(code):
+                        c = code[i]
+                    else:
+                        break
 
-            if c.isalpha():
-                raise LexicalError(f"Unexpected alphabet at char {i}")
+                if c.isalpha():
+                    raise LexicalError(f"Unexpected alphabet at char {i}")
 
-            i -= 1  # retracting
+                i -= 1  # retracting
+
             token_type = TOKENS.NUMBER
 
         else:
             if c == ":":
-                i += 1
-                c = code[i]
+                if i + 1 < len(code):
+                    i += 1
+                    c = code[i]
 
-                if c == "=":
-                    buf += c
-                    token_type = TOKENS.OPERATOR
-                else:
-                    i -= 1  # retracting
-                    token_type = TOKENS.SYMBOL
+                    if c == "=":
+                        buf += c
+                        token_type = TOKENS.OPERATOR
+                    else:
+                        i -= 1  # retracting
+                        token_type = TOKENS.SYMBOL
 
             elif c in SYMBOLS or c in OPERATORS:
                 token_type = TOKENS.SYMBOL if c in SYMBOLS else TOKENS.OPERATOR

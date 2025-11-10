@@ -2,4 +2,6 @@ programme calc;
 variable x: entier;
 debut
     x := 10;
+    tantque pas x = 20 faire
+        x := 20
 fin.
