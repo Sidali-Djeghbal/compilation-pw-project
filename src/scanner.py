@@ -1,6 +1,7 @@
+from curses.ascii import isspace
 from enum import Enum
 from dataclasses import dataclass
-from errors import LexicalError
+from errors import LexicalError, lex_err
 
 
 class TOKENS(Enum):
@@ -41,7 +42,22 @@ KEYWORDS = (
     "pas",
 )
 SYMBOLS = (":", "=", ".", ";", ",")
-OPERATORS = (":=", "+", "-", "*", "/")
+OPERATORS = (
+    ":=",
+    "+",
+    "-",
+    "*",
+    "/",
+    "<",
+    ">",
+    "<=",
+    ">=",
+    "<>",
+    "ou",
+    "et",
+    "div",
+    "mod",
+)
 
 
 def scan(code: str) -> list[Token]:
@@ -81,7 +97,11 @@ def scan(code: str) -> list[Token]:
                 else:
                     i -= 1  # retracting
 
-            token_type = TOKENS.KEYWORD if buf in KEYWORDS else TOKENS.ID
+            token_type = (
+                TOKENS.KEYWORD
+                if buf in KEYWORDS
+                else (TOKENS.OPERATORS if buf in OPERATORS else TOKENS.ID)
+            )
 
         elif c.isspace():
             pass
@@ -99,7 +119,7 @@ def scan(code: str) -> list[Token]:
                         break
 
                 if c.isalpha():
-                    raise LexicalError(f"Unexpected alphabet at char {i}")
+                    raise lex_err(i)
 
                 i -= 1  # retracting
 
@@ -113,15 +133,43 @@ def scan(code: str) -> list[Token]:
                 if c == "=":
                     buf += c
                     token_type = TOKENS.OPERATOR
-                else:
+                elif c.isspace() or c.isalnum():
                     i -= 1  # retracting
                     token_type = TOKENS.SYMBOL
+                else:
+                    lex_err(i)
+
+            elif c == "<" and i + 1 < len(code):
+                i += 1
+                c = code[i]
+
+                if c == "=" or c == ">":
+                    buf += c
+                    token_type = TOKENS.OPERATOR
+                elif c.isspace() or c.isalnum():
+                    i -= 1  # retracting
+                    token_type = TOKENS.SYMBOL
+                else:
+                    lex_err(i)
+
+            elif c == ">" and i + 1 < len(code):
+                i += 1
+                c = code[i]
+
+                if c == "=":
+                    buf += c
+                    token_type = TOKENS.OPERATOR
+                elif c.isspace() or c.isalnum():
+                    i -= 1  # retracting
+                    token_type = TOKENS.SYMBOL
+                else:
+                    lex_err(i)
 
             elif c in SYMBOLS or c in OPERATORS:
                 token_type = TOKENS.SYMBOL if c in SYMBOLS else TOKENS.OPERATOR
 
             else:
-                raise LexicalError(f"Invalid character at char {i}")
+                raise LexicalError(f"Illegal character at char {i}")
 
         if token_type:
             token = Token(token_type, buf)

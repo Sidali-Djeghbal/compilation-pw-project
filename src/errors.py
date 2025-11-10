@@ -8,3 +8,7 @@ class SyntaxError(Exception):
 
 class SemanticError(Exception):
     pass
+
+
+def lex_err(i: int):
+    raise LexicalError(f"Unexpected char at {i}")
