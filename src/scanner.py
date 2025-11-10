@@ -1,4 +1,3 @@
-from curses.ascii import isspace
 from enum import Enum
 from dataclasses import dataclass
 from errors import LexicalError, lex_err
