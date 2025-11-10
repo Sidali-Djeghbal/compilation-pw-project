@@ -106,17 +106,16 @@ def scan(code: str) -> list[Token]:
             token_type = TOKENS.NUMBER
 
         else:
-            if c == ":":
-                if i + 1 < len(code):
-                    i += 1
-                    c = code[i]
+            if c == ":" and i + 1 < len(code):
+                i += 1
+                c = code[i]
 
-                    if c == "=":
-                        buf += c
-                        token_type = TOKENS.OPERATOR
-                    else:
-                        i -= 1  # retracting
-                        token_type = TOKENS.SYMBOL
+                if c == "=":
+                    buf += c
+                    token_type = TOKENS.OPERATOR
+                else:
+                    i -= 1  # retracting
+                    token_type = TOKENS.SYMBOL
 
             elif c in SYMBOLS or c in OPERATORS:
                 token_type = TOKENS.SYMBOL if c in SYMBOLS else TOKENS.OPERATOR
