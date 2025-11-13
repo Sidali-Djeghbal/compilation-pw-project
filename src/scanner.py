@@ -43,6 +43,8 @@ KEYWORDS = (
     "jusqu'a",
     "pour",
     "allant de",
+    "allant",
+    "de",
     "a",
     "pas",
 )
@@ -70,6 +72,7 @@ def scan(code: str) -> ScannerResult:
     symbols_table: list = []
 
     i = 0
+    must_be_allant_de = False
     while i < len(code):
         c = code[i]
         buf = c
@@ -83,9 +86,14 @@ def scan(code: str) -> ScannerResult:
 
         if c.isalpha():
             if i + 1 < len(code):
+                must_be_jusqua = False
                 i += 1
                 c = code[i]
-                while c.isalnum():
+                # the (') is for checking jusqu'a
+                while c.isalnum() or c == "'":
+                    if c == "'":
+                        must_be_jusqua = True
+
                     buf += c
                     i += 1
                     if i < len(code):
@@ -93,27 +101,34 @@ def scan(code: str) -> ScannerResult:
                     else:
                         break
 
-                # check for jusqu'a
-                if i + 1 < len(code) and code[i : i + 2] == "'a":
-                    buf += "'a"
-                    i += 1
-
-                # check for 'allant de'
-                elif i + 2 < len(code) and code[i : i + 3] == " de":
-                    buf += " de"
-                    i += 2
-
-                # normal keyword or identifier
-                else:
-                    i -= 1  # retracting
-
             if buf in KEYWORDS:
+                # magic checks for "allant de"
+                if buf == "allant":
+                    must_be_allant_de = True
+                    i += 1
+                    continue
+
+                elif (buf == "de" and not must_be_allant_de) or (
+                    must_be_allant_de and buf != "de"
+                ):
+                    lex_err(i)
+
+                elif must_be_allant_de:  # here buf must be "de"
+                    token_val = "allant de"
+                    must_be_allant_de = False
+
                 token_type = TOKENS.KEYWORD
+
             elif buf in OPERATORS:
                 token_type = TOKENS.OPERATOR
-            else:
+
+            else:  # identifiers
+                if must_be_jusqua:  # check because identifiers can't have (')
+                    lex_err(i)
+
                 if buf not in symbols_table:
                     symbols_table.append(buf)
+
                 token_val = symbols_table.index(buf)
                 token_type = TOKENS.ID
 
@@ -188,7 +203,7 @@ def scan(code: str) -> ScannerResult:
             else:
                 raise LexicalError(f"Illegal character at char {i}")
 
-        # not white space
+        # if not white space
         if token_type:
             token = Token(token_type, token_val if (token_val is not None) else buf)
             tokens.append(token)
