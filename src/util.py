@@ -32,4 +32,4 @@ def write_scanner_result(result: ScannerResult):
             f.write(f"{i} {symbol}\n")
         print("-----------------")
 
-    print("Lexical analysis complete with no errors.")
+    print("\nLexical analysis completed with no errors.\n")

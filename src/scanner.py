@@ -80,7 +80,7 @@ def scan(code: str) -> ScannerResult:
             None  # None represents whitespace, and will not be added to tokens list.
         )
 
-        # None represents (keyword or op or sym)
+        # None represents: keyword or operator or symbol
         # if not None then it will be the address of the id or literal in the symbols_table.
         token_val: int | None = None
 
@@ -89,6 +89,7 @@ def scan(code: str) -> ScannerResult:
                 must_be_jusqua = False
                 i += 1
                 c = code[i]
+
                 # the (') is for checking jusqu'a
                 while c.isalnum() or c == "'":
                     if c == "'":
@@ -107,12 +108,10 @@ def scan(code: str) -> ScannerResult:
                     must_be_allant_de = True
                     i += 1
                     continue
-
                 elif (buf == "de" and not must_be_allant_de) or (
                     must_be_allant_de and buf != "de"
                 ):
                     lex_err(i)
-
                 elif must_be_allant_de:  # here buf must be "de"
                     token_val = "allant de"
                     must_be_allant_de = False

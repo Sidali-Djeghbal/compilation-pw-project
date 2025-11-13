@@ -11,7 +11,10 @@ def main():
 
     file_path = argv[1]
 
-    code: str = read_file(file_path)
+    print(f"Starting compilation of: {file_path}")
+    print("Stage 1: lexical analysis.\n")
+
+    code = read_file(file_path)
     scanner_result = scan(code)
 
     write_scanner_result(scanner_result)
