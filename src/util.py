@@ -23,7 +23,7 @@ def write_scanner_result(result: ScannerResult):
         print("-----------------")
 
         # print seperators
-        f.write("list:\n")
+        f.write("\n\n")
         print()
 
         print("---  Symbols: ---")
