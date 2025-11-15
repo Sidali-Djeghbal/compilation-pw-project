@@ -46,7 +46,7 @@ KEYWORDS = (
     "a",
     "pas",
 )
-SYMBOLS = (":", "=", ".", ";", ",")
+SYMBOLS = (":", "=", ".", ";", ",", "(", ")") ## added parentheses '(' and ')' to symbols list
 OPERATORS = (
     ":=",
     "+",
@@ -121,6 +121,19 @@ def scan(code: str) -> ScannerResult:
                         c = code[i]
                     else:
                         break
+                if i < len(code) and c == ".": # handling real number
+                    buf += c  
+                    i += 1 
+                    c = code[i] 
+                    if not c.isdigit(): 
+                        raise lex_err(i) # error if not digit after dot (malformed number)
+                    while c.isdigit(): # collect digits after dot
+                        buf += c
+                        i += 1
+                        if i < len(code):
+                            c = code[i]
+                        else:
+                            break
 
                 if c.isalpha():
                     raise lex_err(i)
