@@ -46,7 +46,7 @@ KEYWORDS = (
     "a",
     "pas",
 )
-SYMBOLS = (":", "=", ".", ";", ",", "(", ")") ## added parentheses '(' and ')' to symbols list
+SYMBOLS = (":", "=", ".", ";", ",", "(", ")")
 OPERATORS = (
     ":=",
     "+",
@@ -94,6 +94,8 @@ def scan(code: str) -> ScannerResult:
                     else:
                         break
 
+                i -= 1  # retracting
+
             if buf in KEYWORDS:
                 token_type = TOKENS.KEYWORD
 
@@ -114,6 +116,7 @@ def scan(code: str) -> ScannerResult:
             if i < len(code):
                 i += 1
                 c = code[i]
+
                 while c.isdigit():
                     buf += c
                     i += 1
@@ -121,13 +124,16 @@ def scan(code: str) -> ScannerResult:
                         c = code[i]
                     else:
                         break
-                if i < len(code) and c == ".": # handling real number
-                    buf += c  
-                    i += 1 
-                    c = code[i] 
-                    if not c.isdigit(): 
-                        raise lex_err(i) # error if not digit after dot (malformed number)
-                    while c.isdigit(): # collect digits after dot
+
+                if i < len(code) and c == ".":  # handling real number
+                    buf += c
+                    i += 1
+                    c = code[i]
+
+                    if not c.isdigit():
+                        raise lex_err(i)  # malformed number (must be number after dot)
+
+                    while c.isdigit():  # collect digits after dot
                         buf += c
                         i += 1
                         if i < len(code):
@@ -142,6 +148,7 @@ def scan(code: str) -> ScannerResult:
 
             if buf not in symbols_table:
                 symbols_table.append(buf)
+
             token_val = symbols_table.index(buf)
             token_type = TOKENS.NUMBER
 
