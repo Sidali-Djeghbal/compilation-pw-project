@@ -11,14 +11,17 @@ def main():
 
     file_path = argv[1]
 
-    print(f"Starting compilation of: {file_path}")
-    print("Stage 1: lexical analysis.\n")
+    print(f"Starting compilation of: {file_path}\n")
+
+    print("Stage 0: reading file, and pretreatment...")
 
     code = read_file(file_path)
     code = pre_treat(code)
+    print("done.\n")
+
+    print("Stage 1: lexical analysis.\n")
 
     scanner_result = scan(code)
-
     write_scanner_result(scanner_result)
 
 
