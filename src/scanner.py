@@ -40,11 +40,9 @@ KEYWORDS = (
     "tantque",
     "faire",
     "repeter",
-    "jusqu'a",
+    "jusqua",
     "pour",
-    "allant de",
-    "allant",
-    "de",
+    "allantde",
     "a",
     "pas",
 )
@@ -72,7 +70,6 @@ def scan(code: str) -> ScannerResult:
     symbols_table: list = []
 
     i = 0
-    must_be_allant_de = False
     while i < len(code):
         c = code[i]
         buf = c
@@ -86,15 +83,10 @@ def scan(code: str) -> ScannerResult:
 
         if c.isalpha():
             if i + 1 < len(code):
-                must_be_jusqua = False
                 i += 1
                 c = code[i]
 
-                # the (') is for checking jusqu'a
-                while c.isalnum() or c == "'":
-                    if c == "'":
-                        must_be_jusqua = True
-
+                while c.isalnum():
                     buf += c
                     i += 1
                     if i < len(code):
@@ -103,28 +95,12 @@ def scan(code: str) -> ScannerResult:
                         break
 
             if buf in KEYWORDS:
-                # magic checks for "allant de"
-                if buf == "allant":
-                    must_be_allant_de = True
-                    i += 1
-                    continue
-                elif (buf == "de" and not must_be_allant_de) or (
-                    must_be_allant_de and buf != "de"
-                ):
-                    lex_err(i)
-                elif must_be_allant_de:  # here buf must be "de"
-                    token_val = "allant de"
-                    must_be_allant_de = False
-
                 token_type = TOKENS.KEYWORD
 
             elif buf in OPERATORS:
                 token_type = TOKENS.OPERATOR
 
             else:  # identifiers
-                if must_be_jusqua:  # check because identifiers can't have (')
-                    lex_err(i)
-
                 if buf not in symbols_table:
                     symbols_table.append(buf)
 

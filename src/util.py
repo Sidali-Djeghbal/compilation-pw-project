@@ -1,5 +1,14 @@
+import re
 from os import path
 from scanner import TOKENS, ScannerResult
+
+
+def pre_treat(code: str) -> str:
+    out = code
+    out = re.sub(r"\s+allant\s+de\s+", " allantde ", out)
+    out = re.sub(r"\s+jusqu'a\s+", " jusqua ", out)
+
+    return out
 
 
 def read_file(file_path: str) -> str:

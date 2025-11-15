@@ -1,5 +1,5 @@
 from sys import argv
-from util import write_scanner_result, read_file
+from util import pre_treat, write_scanner_result, read_file
 from scanner import scan
 
 
@@ -15,6 +15,8 @@ def main():
     print("Stage 1: lexical analysis.\n")
 
     code = read_file(file_path)
+    code = pre_treat(code)
+
     scanner_result = scan(code)
 
     write_scanner_result(scanner_result)
