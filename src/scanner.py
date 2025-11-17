@@ -103,10 +103,8 @@ def scan(code: str) -> ScannerResult:
                 token_type = TOKENS.OPERATOR
 
             else:  # identifiers
-                if (
-                    len(buf) < 2 or not buf[1].isdigit()
-                ):  # identifier must start with LN
-                    lex_err(i)
+                if len(buf) < 2 or not buf[1].isdigit():
+                    lex_err(i, msg="Identifier must start with letter and number")
 
                 if buf not in symbols_table:
                     symbols_table.append(buf)
@@ -131,17 +129,18 @@ def scan(code: str) -> ScannerResult:
                         break
 
                 if c == ".":  # handling real number
-                    if (
-                        i < len(code) or len(buf) < 2
-                    ):  # real number must start with two digits.
-                        lex_err(i)
+                    if i >= len(code):
+                        lex_err(i, msg="Unexpected EOF")
+
+                    if len(buf) < 2:
+                        lex_err(i, msg="Real number must have two digits before dot")
 
                     buf += c
                     i += 1
                     c = code[i]
 
                     if not c.isdigit():
-                        raise lex_err(i)  # malformed number (must be number after dot)
+                        raise lex_err(i, msg="Malformed real number")
 
                     while c.isdigit():  # collect digits after dot
                         buf += c
@@ -152,7 +151,7 @@ def scan(code: str) -> ScannerResult:
                             break
 
                 if c.isalpha():
-                    raise lex_err(i)
+                    raise lex_err(i, c, "A letter cannot be in a number")
 
                 i -= 1  # retracting
 
@@ -174,7 +173,7 @@ def scan(code: str) -> ScannerResult:
                     i -= 1  # retracting
                     token_type = TOKENS.SYMBOL
                 else:
-                    lex_err(i)
+                    lex_err(i, c, "Invalid character after ':' ")
 
             elif c == "<" and i + 1 < len(code):
                 i += 1
@@ -187,7 +186,7 @@ def scan(code: str) -> ScannerResult:
                     i -= 1  # retracting
                     token_type = TOKENS.SYMBOL
                 else:
-                    lex_err(i)
+                    lex_err(i, c, "Invalid character after '<' ")
 
             elif c == ">" and i + 1 < len(code):
                 i += 1
@@ -200,13 +199,13 @@ def scan(code: str) -> ScannerResult:
                     i -= 1  # retracting
                     token_type = TOKENS.SYMBOL
                 else:
-                    lex_err(i)
+                    lex_err(i, c, "Invalid character after '>' ")
 
             elif c in SYMBOLS or c in OPERATORS:
                 token_type = TOKENS.SYMBOL if c in SYMBOLS else TOKENS.OPERATOR
 
             else:
-                raise LexicalError(f"Illegal character at char {i}")
+                lex_err(i, c, "Illegal character")
 
         # if not white space
         if token_type:

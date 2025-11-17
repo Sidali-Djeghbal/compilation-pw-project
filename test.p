@@ -1,25 +1,25 @@
-programme ComprehensiveTest ;
+programme P1TEST ;
 
-reel X = 1.24 ; test = 100 ; variablle = 50 ;
+reel X2 = 10.24 ; t1 = 100 ; v1 = 50 ;
 
-variable A, B, C: entier; X: reel; I: entier;
+variable A1, B1, C3: entier; X2: reel; I10: entier;
 
 debut
-    A := -(B + 5) * C + X / (2.0 - PI) ;
-    si A < X alors
-        B := B + 1; 
-    sinon B := 0;
+    A1 := -(B1 + 5) * C3 + X2 / (02.0 - 03.14) ;
+    si A1 < X2 alors
+        B1 := B1 + 1; 
+    sinon B1 := 0;
 
-    tantque A >= 0 faire
+    tantque A1 >= 0 faire
         debut 
-            A := A - 1 ;
-            C := A mod 2 ;
+            A1 := A1 - 1 ;
+            C3 := A1 mod 2 ;
         fin;
     
-    repeter X := X * 1.05 ;
-    jusqu'a X >= LIMIT;
+    repeter X2 := X2 * 10.05 ;
+    jusqu'a X2 >= L1mit;
     
-    pour I allant de 1 a LIMIT pas TEXTE faire
-    A := A + I;
-    A := (B div C) et 1;
+    pour I10 allant de 1 a L1mit pas T3XT faire
+    A1 := A1 + I10;
+    A1 := (B1 div C3) et 1;
 fin.
