@@ -9,6 +9,8 @@ This project involves the design and implementation of a compiler for the MiniPa
 1. **Scanner (Scanner2025):** Responsible for lexical analysis.
 2. **Parser (Parser2025):** Responsible for syntactic analysis.
 
+You can refer to the full assignment document here:  [TP-Comp-2025.pdf](TP-Comp-2025.pdf)
+
 ---
 
 ## Grammar of MiniPascal-FR
@@ -61,15 +63,20 @@ The grammar of the MiniPascal-FR language is defined in Backus-Naur Form (BNF):
 
 ---
 
-## Deadlines
-- **Scanner2025 Validation:** December 1, 2025
-- **Parser2025 Validation:** January 12, 2026
+## Deterministic Finite State Automaton
 
----
+The automaton implements the lexical recognition phase of the compiler.
+It defines the set of valid tokens in the language and encodes them as deterministic state transitions.
+Each transition consumes exactly one input symbol, ensuring that every prefix of the input leads to a unique next state.
+Accepting states correspond to recognized token categories such as identifiers, keywords, operators, and numeric literals.
+Non-accepting sink states capture invalid or ill-formed sequences.
 
-## Additional Notes
-- The responsible teacher will validate the students' programs. Students must follow the teacher's instructions.
-- Students can work in pairs but not in groups of three.
+The DFA guarantees total determinism over the input alphabet by providing an outgoing transition for every symbol in every state.
+This structure enables direct simulation by the scanner module and produces token classifications without backtracking.
+The diagram below serves as the formal specification of the automaton and must remain synchronized with the implementation.
+
+<img src="assets/automata.webp">
+
 
 ---
 
@@ -81,11 +88,17 @@ The grammar of the MiniPascal-FR language is defined in Backus-Naur Form (BNF):
 
 ## TO-DO 
 1. **Scanner Implementation:**
-   - [ ] Design and implement a scanner for the MiniPascal-FR language.
-   - [ ] Store the output in a file named `TOKEN`.
-   - [ ] Display the sequence of tokens, the symbol table, and any errors with their types on the screen.
+   - [X] Design and implement a scanner for the MiniPascal-FR language.
+   - [X] Store the output in a file named `TOKEN`.
+   - [X] Display the sequence of tokens, the symbol table, and any errors with their types on the screen.
 
 3. **Parser Implementation:**
    - [ ] Design and implement a recursive descent parser for the MiniPascal-FR language.
    - [ ] Store the output in a file named `RULE`.
    - [ ] Display the sequence of rules corresponding to the source program and any errors with their types on the screen.
+
+---
+
+## Deadlines
+- **Scanner2025 Validation:** December 1, 2025
+- **Parser2025 Validation:** January 12, 2026
