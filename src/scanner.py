@@ -103,6 +103,11 @@ def scan(code: str) -> ScannerResult:
                 token_type = TOKENS.OPERATOR
 
             else:  # identifiers
+                if (
+                    len(buf) < 2 or not buf[1].isdigit()
+                ):  # identifier must start with LN
+                    lex_err(i)
+
                 if buf not in symbols_table:
                     symbols_table.append(buf)
 
@@ -125,7 +130,12 @@ def scan(code: str) -> ScannerResult:
                     else:
                         break
 
-                if i < len(code) and c == ".":  # handling real number
+                if c == ".":  # handling real number
+                    if (
+                        i < len(code) or len(buf) < 2
+                    ):  # real number must start with two digits.
+                        lex_err(i)
+
                     buf += c
                     i += 1
                     c = code[i]
