@@ -1,9 +1,4 @@
-## MiniPascal-FR Compiler Project
-
-# ⚠️ Note for Classmates
-Using this repository to copy or cheat **will not help you improve your skills.** Building your own MiniPascal-FR compiler is the only way to truly learn and understand the concepts. If you need guidance or explanations, I’m here to help—ask questions, discuss ideas, and work through problems yourself. **The goal is learning, not copy-paste.**
-
-
+# MiniPascal-FR Compiler Project
 ## Overview
 This project involves the design and implementation of a compiler for the MiniPascal-FR programming language. The compiler will consist of two main components:
 1. **Scanner (Scanner2025):** Responsible for lexical analysis.
