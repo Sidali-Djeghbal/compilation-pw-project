@@ -1,6 +1,6 @@
 from enum import Enum
 from dataclasses import dataclass
-from errors import LexicalError, lex_err
+from errors import lex_err
 
 
 class TOKENS(Enum):
@@ -52,7 +52,6 @@ OPERATORS = (
     "+",
     "-",
     "*",
-    "/",
     "<",
     ">",
     "<=",
