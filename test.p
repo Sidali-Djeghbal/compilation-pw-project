@@ -5,7 +5,7 @@ reel X2 = 10.24 ; t1 = 100 ; v1 = 50 ;
 variable A1, B1, C3: entier; X2: reel; I10: entier;
 
 debut
-    A1 := -(B1 + 5) * C3 + X2 / (02.0 - 03.14) ;
+    A1 := -(B1 + 5) * C3 + X2 div (02.0 - 03.14) ;
     si A1 < X2 alors
         B1 := B1 + 1; 
     sinon B1 := 0;

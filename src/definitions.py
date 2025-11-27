@@ -1,4 +1,22 @@
-from pyparsing import tokenMap
+from dataclasses import dataclass
+from enum import Enum
+
+
+class TOKEN_TYPE(Enum):
+    KEYWORD = 1
+    ID = 2
+    SYMBOL = 3
+    OPERATOR = 4
+    NUMBER = 5
+
+
+@dataclass
+class Token:
+    code: TOKEN_TYPE
+    val: str | int
+
+    def __repr__(self):
+        return f"<{self.code.name}, {self.val}>"
 
 
 TOKEN_PROGRAMME = "programme"
