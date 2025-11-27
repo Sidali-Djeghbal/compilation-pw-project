@@ -1,6 +1,6 @@
 import re
 from os import path
-from definitions import TOKEN_TYPE
+from definitions import TokenType
 from scanner import ScannerResult
 
 
@@ -24,7 +24,7 @@ def write_scanner_result(result: ScannerResult):
     with open("TOKEN", "w") as f:
         print("---- Tokens: ----")
         for token in result.tokens:
-            if token.code in (TOKEN_TYPE.ID, TOKEN_TYPE.NUMBER):
+            if token.code in (TokenType.ID, TokenType.NUMBER):
                 print(f"<{token.code.name}, {result.symbols_table[token.val]}>")
                 f.write(f"({token.code.value},{token.val}),")
             else:

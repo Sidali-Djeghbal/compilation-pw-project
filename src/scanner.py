@@ -9,7 +9,7 @@ from definitions import (
     TOKEN_O_LESS_THAN,
     TOKEN_S_COLON,
     TOKEN_S_DOT,
-    TOKEN_TYPE,
+    TokenType,
     Token,
 )
 
@@ -28,7 +28,7 @@ def scan(code: str) -> ScannerResult:
     while i < len(code):
         c = code[i]
         buf = c
-        token_type: TOKEN_TYPE = (
+        token_type: TokenType = (
             None  # None represents whitespace, and will not be added to tokens list.
         )
 
@@ -52,10 +52,10 @@ def scan(code: str) -> ScannerResult:
                 i -= 1  # retracting
 
             if buf in KEYWORD_LIST:
-                token_type = TOKEN_TYPE.KEYWORD
+                token_type = TokenType.KEYWORD
 
             elif buf in OPERATOR_LIST:  # for mod, div...etc
-                token_type = TOKEN_TYPE.OPERATOR
+                token_type = TokenType.OPERATOR
 
             else:  # identifiers
                 if len(buf) < 2 or not buf[1].isdigit():
@@ -65,7 +65,7 @@ def scan(code: str) -> ScannerResult:
                     symbols_table.append(buf)
 
                 token_val = symbols_table.index(buf)
-                token_type = TOKEN_TYPE.ID
+                token_type = TokenType.ID
 
         elif c.isspace():
             pass
@@ -114,7 +114,7 @@ def scan(code: str) -> ScannerResult:
                 symbols_table.append(buf)
 
             token_val = symbols_table.index(buf)
-            token_type = TOKEN_TYPE.NUMBER
+            token_type = TokenType.NUMBER
 
         else:
             if c == TOKEN_S_COLON and i + 1 < len(code):
@@ -123,10 +123,10 @@ def scan(code: str) -> ScannerResult:
 
                 if c == TOKEN_O_EQUALS:
                     buf += c
-                    token_type = TOKEN_TYPE.OPERATOR
+                    token_type = TokenType.OPERATOR
                 elif c.isspace() or c.isalnum():
                     i -= 1  # retracting
-                    token_type = TOKEN_TYPE.SYMBOL
+                    token_type = TokenType.SYMBOL
                 else:
                     lex_err(i, c, "Invalid character after ':' ")
 
@@ -136,10 +136,10 @@ def scan(code: str) -> ScannerResult:
 
                 if c == TOKEN_O_EQUALS or c == TOKEN_O_GREATER_THAN:
                     buf += c
-                    token_type = TOKEN_TYPE.OPERATOR
+                    token_type = TokenType.OPERATOR
                 elif c.isspace() or c.isalnum():
                     i -= 1  # retracting
-                    token_type = TOKEN_TYPE.SYMBOL
+                    token_type = TokenType.SYMBOL
                 else:
                     lex_err(i, c, "Invalid character after '<' ")
 
@@ -149,16 +149,16 @@ def scan(code: str) -> ScannerResult:
 
                 if c == TOKEN_O_EQUALS:
                     buf += c
-                    token_type = TOKEN_TYPE.OPERATOR
+                    token_type = TokenType.OPERATOR
                 elif c.isspace() or c.isalnum():
                     i -= 1  # retracting
-                    token_type = TOKEN_TYPE.SYMBOL
+                    token_type = TokenType.SYMBOL
                 else:
                     lex_err(i, c, "Invalid character after '>' ")
 
             elif c in SYMBOL_LIST or c in OPERATOR_LIST:
                 token_type = (
-                    TOKEN_TYPE.SYMBOL if c in SYMBOL_LIST else TOKEN_TYPE.OPERATOR
+                    TokenType.SYMBOL if c in SYMBOL_LIST else TokenType.OPERATOR
                 )
 
             else:
