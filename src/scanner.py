@@ -4,9 +4,9 @@ from definitions import (
     KEYWORD_LIST,
     OPERATOR_LIST,
     SYMBOL_LIST,
-    TOKEN_O_EQUALS,
-    TOKEN_O_GREATER_THAN,
-    TOKEN_O_LESS_THAN,
+    TOKEN_OP_EQUALS,
+    TOKEN_OP_GREATER_THAN,
+    TOKEN_OP_LESS_THAN,
     TOKEN_S_COLON,
     TOKEN_S_DOT,
     TokenType,
@@ -121,7 +121,7 @@ def scan(code: str) -> ScannerResult:
                 i += 1
                 c = code[i]
 
-                if c == TOKEN_O_EQUALS:
+                if c == TOKEN_OP_EQUALS:
                     buf += c
                     token_type = TokenType.OPERATOR
                 elif c.isspace() or c.isalnum():
@@ -130,11 +130,11 @@ def scan(code: str) -> ScannerResult:
                 else:
                     lex_err(i, c, "Invalid character after ':' ")
 
-            elif c == TOKEN_O_LESS_THAN and i + 1 < len(code):
+            elif c == TOKEN_OP_LESS_THAN and i + 1 < len(code):
                 i += 1
                 c = code[i]
 
-                if c == TOKEN_O_EQUALS or c == TOKEN_O_GREATER_THAN:
+                if c == TOKEN_OP_EQUALS or c == TOKEN_OP_GREATER_THAN:
                     buf += c
                     token_type = TokenType.OPERATOR
                 elif c.isspace() or c.isalnum():
@@ -143,11 +143,11 @@ def scan(code: str) -> ScannerResult:
                 else:
                     lex_err(i, c, "Invalid character after '<' ")
 
-            elif c == TOKEN_O_GREATER_THAN and i + 1 < len(code):
+            elif c == TOKEN_OP_GREATER_THAN and i + 1 < len(code):
                 i += 1
                 c = code[i]
 
-                if c == TOKEN_O_EQUALS:
+                if c == TOKEN_OP_EQUALS:
                     buf += c
                     token_type = TokenType.OPERATOR
                 elif c.isspace() or c.isalnum():
