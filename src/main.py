@@ -21,7 +21,7 @@ def main():
 
     print("Stage 1: lexical analysis.\n")
 
-    scanner_result = scan(code)
+    scanner_result = scan(code, file_path)
     write_scanner_result(scanner_result)
 
 

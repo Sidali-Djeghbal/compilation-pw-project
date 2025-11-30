@@ -20,7 +20,11 @@ class ScannerResult:
     symbols_table: list
 
 
-def scan(code: str) -> ScannerResult:
+def get_line_num(code: str, index: int) -> int:
+    return code.count('\n', 0, index) + 1
+
+
+def scan(code: str, filename: str = None) -> ScannerResult:
     tokens: list[Token] = []
     symbols_table: list = []
 
@@ -59,7 +63,12 @@ def scan(code: str) -> ScannerResult:
 
             else:  # identifiers
                 if len(buf) < 2 or not buf[1].isdigit():
-                    lex_err(i, msg="Identifier must start with letter and number")
+                    lex_err(
+                        i,
+                        msg="Identifier must start with letter and number",
+                        line=get_line_num(code, i),
+                        filename=filename,
+                    )
 
                 if buf not in symbols_table:
                     symbols_table.append(buf)
@@ -85,17 +94,24 @@ def scan(code: str) -> ScannerResult:
 
                 if c == TOKEN_S_DOT:  # handling real number
                     if i >= len(code):
-                        lex_err(i, msg="Unexpected EOF")
+                        lex_err(i, msg="Unexpected EOF", line=get_line_num(code, i), filename=filename)
 
                     if len(buf) < 2:
-                        lex_err(i, msg="Real number must have two digits before dot")
+                        lex_err(
+                            i,
+                            msg="Real number must have two digits before dot",
+                            line=get_line_num(code, i),
+                            filename=filename,
+                        )
 
                     buf += c
                     i += 1
                     c = code[i]
 
                     if not c.isdigit():
-                        raise lex_err(i, msg="Malformed real number")
+                        raise lex_err(
+                            i, msg="Malformed real number", line=get_line_num(code, i), filename=filename
+                        )
 
                     while c.isdigit():  # collect digits after dot
                         buf += c
@@ -106,7 +122,13 @@ def scan(code: str) -> ScannerResult:
                             break
 
                 if c.isalpha():
-                    raise lex_err(i, c, "A letter cannot be in a number")
+                    raise lex_err(
+                        i,
+                        c,
+                        "A letter cannot be in a number",
+                        line=get_line_num(code, i),
+                        filename=filename,
+                    )
 
                 i -= 1  # retracting
 
@@ -128,7 +150,13 @@ def scan(code: str) -> ScannerResult:
                     i -= 1  # retracting
                     token_type = TokenType.SYMBOL
                 else:
-                    lex_err(i, c, "Invalid character after ':' ")
+                    lex_err(
+                        i,
+                        c,
+                        "Invalid character after ':' ",
+                        line=get_line_num(code, i),
+                        filename=filename,
+                    )
 
             elif c == TOKEN_OP_LESS_THAN and i + 1 < len(code):
                 i += 1
@@ -141,7 +169,13 @@ def scan(code: str) -> ScannerResult:
                     i -= 1  # retracting
                     token_type = TokenType.SYMBOL
                 else:
-                    lex_err(i, c, "Invalid character after '<' ")
+                    lex_err(
+                        i,
+                        c,
+                        "Invalid character after '<' ",
+                        line=get_line_num(code, i),
+                        filename=filename,
+                    )
 
             elif c == TOKEN_OP_GREATER_THAN and i + 1 < len(code):
                 i += 1
@@ -154,7 +188,13 @@ def scan(code: str) -> ScannerResult:
                     i -= 1  # retracting
                     token_type = TokenType.SYMBOL
                 else:
-                    lex_err(i, c, "Invalid character after '>' ")
+                    lex_err(
+                        i,
+                        c,
+                        "Invalid character after '>' ",
+                        line=get_line_num(code, i),
+                        filename=filename,
+                    )
 
             elif c in SYMBOL_LIST or c in OPERATOR_LIST:
                 token_type = (
@@ -162,7 +202,7 @@ def scan(code: str) -> ScannerResult:
                 )
 
             else:
-                lex_err(i, c, "Illegal character")
+                lex_err(i, c, "Illegal character", line=get_line_num(code, i), filename=filename)
 
         # if not white space
         if token_type:

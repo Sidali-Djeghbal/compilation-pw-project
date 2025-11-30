@@ -5,7 +5,7 @@ reel X2 = 10.24 ; t1 = 100 ; v1 = 50 ;
 variable A1, B1, C3: entier; X2: reel; I10: entier;
 
 debut
-    A1 := -(B1 + 5) * C3 + X2 div (02.0 - 03.14) ;
+    A1 := -(B1 + 5) * C3 + X2 div (12.0 - 35.14) ;
     si A1 < X2 alors
         B1 := B1 + 1; 
     sinon B1 := 0;
@@ -17,9 +17,10 @@ debut
         fin;
     
     repeter X2 := X2 * 10.05 ;
-    jusqu'a X2 >= L1mit;
+    jusqu'a X2 >= X2;
     
-    pour I10 allant de 1 a L1mit pas T3XT faire
-    A1 := A1 + I10;
-    A1 := (B1 div C3) et 1;
+    pour I10 allant de 1 a X2 pas T3XT faire
+
+        A1 := A1 + I10;
+        A := (B1 div C3) et 1;
 fin.
