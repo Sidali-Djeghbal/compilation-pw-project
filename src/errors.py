@@ -18,14 +18,20 @@ def lex_err(
     filename: str = None,
 ):
     if char is None:
-        error_message = f"{msg}, at char {i}"
+        error_msg = f"{msg}, at char {i}"
     else:
-        error_message = f"{msg}: '{char}', at char {i}"
+        error_msg = f"{msg}: '{char}', at char {i}"
 
     if line is not None:
-        error_message += f", at line {line}"
+        error_msg += f", at line {line}"
 
     if filename is not None:
-        error_message += f", in file {filename}"
+        error_msg += f", in file {filename}"
 
-    raise LexicalError(error_message)
+    raise LexicalError(error_msg)
+
+
+def syn_err(expected: str, found: str, i: int):
+    error_msg = f"Expected: '{expected}' but found: '{found}', at token {i}."
+
+    raise SyntaxError(error_msg)
