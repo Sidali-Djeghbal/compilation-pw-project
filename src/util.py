@@ -41,5 +41,3 @@ def write_scanner_result(result: ScannerResult):
             print(i, "|", symbol)
             f.write(f"{i} {symbol}\n")
         print("-----------------")
-
-    print("\nLexical analysis completed with no errors.\n")

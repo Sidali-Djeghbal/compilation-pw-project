@@ -1,4 +1,5 @@
 from sys import argv
+from parser import start_parse
 from util import pre_treat, write_scanner_result, read_file
 from scanner import scan
 
@@ -23,6 +24,12 @@ def main():
 
     scanner_result = scan(code, file_path)
     write_scanner_result(scanner_result)
+    print("\nLexical analysis finished with no errors.\n")
+
+    print("Stage 2: parsing.\n")
+
+    start_parse(scanner_result)
+    print("\nParsing finished with no errors.")
 
 
 if __name__ == "__main__":
