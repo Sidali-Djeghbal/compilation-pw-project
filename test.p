@@ -22,5 +22,5 @@ debut
     pour I10 allant de 1 a X2 pas T3XT faire
 
         A1 := A1 + I10;
-        A := (B1 div C3) et 1;
+        X2 := (B1 div C3) et 1;
 fin.

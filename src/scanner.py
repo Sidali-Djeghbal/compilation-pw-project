@@ -109,7 +109,7 @@ def scan(code: str, filename: str = None) -> ScannerResult:
                     c = code[i]
 
                     if not c.isdigit():
-                        raise lex_err(
+                        lex_err(
                             i, msg="Malformed real number", line=get_line_num(code, i), filename=filename
                         )
 
@@ -122,7 +122,7 @@ def scan(code: str, filename: str = None) -> ScannerResult:
                             break
 
                 if c.isalpha():
-                    raise lex_err(
+                    lex_err(
                         i,
                         c,
                         "A letter cannot be in a number",
